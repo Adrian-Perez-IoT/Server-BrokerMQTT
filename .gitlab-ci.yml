@@ -7,7 +7,7 @@ stages:
 #- deploy_staging
 - deploy_production
 variables:
-  ZAZ_TAG_NAME: registry.gitlab.com/tesis-iot/webserver/webserver-backend:$CI_COMMIT_SHA
+  ZAZ_TAG_NAME: registry.gitlab.com/tesis-iot/webserver/webserver-backmqtt:$CI_COMMIT_SHA
 before_script:
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
 
@@ -54,8 +54,8 @@ deploy_production:server:
     - webserver-back-production
   script:
     - cd /home/gitlab-runner/webserver-deployer
-    - chmod u+x deploy-backend.sh
-    - ./deploy-backend.sh $CI_COMMIT_SHA
+    - chmod u+x deploy-backendMQTT.sh
+    - ./deploy-backendMQTT.sh $CI_COMMIT_SHA
   environment: production
   only:
     - master
