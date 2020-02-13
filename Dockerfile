@@ -20,6 +20,6 @@ RUN npm run build
 EXPOSE 80
 EXPOSE 1883
 
-ENTRYPOINT ["/usr/src/app/bin/mosca", "-d", "/db", "--http-port", "80", "--http-bundle", "-v"]
+#ENTRYPOINT ["/usr/src/app/bin/mosca", "-d", "/db", "--http-port", "80", "--http-bundle", "-v"]
 #https://riptutorial.com/es/docker/example/2700/diferencia-entre-entrypoint-y-cmd 
-CMD ["pm2-runtime","dist/broker.js"]
+CMD ["node","dist/broker.js"]
