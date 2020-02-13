@@ -1,0 +1,26 @@
+{
+  "name": "webserver-backmqtt",
+  "version": "1.0.0",
+  "description": "Servidor MQTT mosca",
+  "main": "index.js",
+  "scripts": {
+    "start-dev": "npm run watch",
+    "watch": "nodemon --ext ts --exec \"npm run compile-ts-run-server\"",
+    "compile-ts-run-server": "tsc && env NODE_ENV=development node ./dist/broker.js",
+    "build": "tsc --project .",
+    "start-prod": "npm run build && pm2-runtime dist/broker.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adrianchus",
+  "license": "ISC",
+  "dependencies": {
+    "mosca": "^2.8.3",
+    "mqtt": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/mosca": "^2.8.2",
+    "@types/node": "^13.7.1",
+    "nodemon": "^2.0.2",
+    "typescript": "^3.7.5"
+  }
+}
