@@ -51,9 +51,10 @@ deploy_production:server:
   stage: deploy_production
   dependencies: []
   tags:
-    - webserver-back-production
+    #- webserver-back-production
+    - servidor-iot-back-production
   script:
-    - cd /home/gitlab-runner/webserver-deployer
+    - cd /home/gitlab-runner/servidor-iot-deployer
     - chmod u+x deploy-backendMQTT.sh
     - ./deploy-backendMQTT.sh $CI_COMMIT_SHA
   environment: production
