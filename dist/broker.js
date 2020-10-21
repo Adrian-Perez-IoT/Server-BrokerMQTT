@@ -1,32 +1,30 @@
 "use strict";
 // Broker MQTT
-var mosca = require('mosca');
-var settings = {
-    port: 1883
-};
-var broker = new mosca.Server(settings);
-broker.on('error', function (err) {
-    console.log(err);
+const aedes = require('aedes')();
+const server = require('net').createServer(aedes.handle);
+// import ws from 'websocket-stream'
+const port = 1883;
+server.listen(port, function () {
+    console.log('server listening on port', port);
 });
-// Fired when a message is received
-broker.on('published', function (packet, client) {
-    console.log('Published', packet.topic, packet.payload);
+aedes.on('clientError', function (client, err) {
+    console.log('client error', client.id, err.message, err.stack);
 });
-broker.on('subscribed', function (topic, client) {
-    console.log("Subscribed :=", client.packet);
+aedes.on('connectionError', function (client, err) {
+    console.log('client error', client, err.message, err.stack);
 });
-broker.on('clientConnected', function (client) {
-    console.log('Client connected', client.id);
+aedes.on('publish', function (packet, client) {
+    if (client) {
+        console.log('message from client', client.id);
+    }
 });
-broker.on('clientDisconnecting', function (client) {
-    console.log('clientDisconnecting := ', client.id);
+aedes.on('subscribe', function (subscriptions, client) {
+    if (client) {
+        console.log('subscribe from client', subscriptions, client.id);
+    }
 });
-// Fired when a client disconnects
-broker.on('clientDisconnected', function (client) {
-    console.log('Client Disconnected:', client.id);
-});
-broker.on('ready', () => {
-    console.log('Server Backend (Broker) is up and running!');
+aedes.on('client', function (client) {
+    console.log('new client', client.id);
 });
 console.log(`Environment: ${process.env.NODE_ENV}`);
 //# sourceMappingURL=broker.js.map

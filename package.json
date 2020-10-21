@@ -13,11 +13,8 @@
   "author": "Adrianchus",
   "license": "ISC",
   "dependencies": {
-    "@types/ws": "^7.2.7",
     "aedes": "^0.43.0",
-    "mosca": "^2.8.3",
-    "mqtt": "^3.0.0",
-    "websocket-stream": "^5.5.2"
+    "mqtt": "^3.0.0"
   },
   "devDependencies": {
     "@types/mosca": "^2.8.2",
