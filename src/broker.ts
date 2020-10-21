@@ -2,7 +2,7 @@
 
 const aedes = require('aedes')()
 const server = require('net').createServer(aedes.handle)
-const httpServer = require('http').createServer()
+
 // import ws from 'websocket-stream'
 
 const port = 1883
