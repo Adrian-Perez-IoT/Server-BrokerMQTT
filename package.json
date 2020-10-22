@@ -10,16 +10,10 @@
     "build": "tsc --project .",
     "start-prod": "npm run build && pm2-runtime dist/broker.js"
   },
-  "author": "Adrianchus",
+  "author": "Adrian UNJu",
   "license": "ISC",
   "dependencies": {
     "aedes": "^0.43.0",
     "mqtt": "^3.0.0"
-  },
-  "devDependencies": {
-    "@types/mosca": "^2.8.2",
-    "@types/node": "^13.7.1",
-    "nodemon": "^2.0.2",
-    "typescript": "^3.7.5"
   }
 }
