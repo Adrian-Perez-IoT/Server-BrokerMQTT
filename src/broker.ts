@@ -1,6 +1,6 @@
 // Broker MQTT
 
-const aedes = require('aedes')()
+const aedes = require('./aedes')()
 const server = require('net').createServer(aedes.handle)
 
 // import ws from 'websocket-stream'
