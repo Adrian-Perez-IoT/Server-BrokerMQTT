@@ -1,5 +1,5 @@
 // Broker MQTT
-
+/* 
 const aedes = require('aedes')()
 const server = require('net').createServer(aedes.handle)
 
@@ -11,7 +11,11 @@ server.listen(port, function () {
   console.log('server listening on port', port)
 })
 
-// aedes.on('clientError', function (client, err) {
+
+ */
+
+
+ // aedes.on('clientError', function (client, err) {
 //   console.log('client error', client.id, err.message, err.stack)
 // })
 
@@ -35,4 +39,4 @@ server.listen(port, function () {
 //   console.log('new client', client.id)
 // })
 
-// console.log(`Environment: ${process.env.NODE_ENV}`);
+// console.log(`Environment: ${process.env.NODE_ENV}`);a
