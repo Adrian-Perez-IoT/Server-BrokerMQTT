@@ -24,3 +24,4 @@ EXPOSE 1883
 #https://riptutorial.com/es/docker/example/2700/diferencia-entre-entrypoint-y-cmd 
 # CMD ["node","dist/broker.js"]
 # CMD ["node","src/broker.js"]
+CMD ["ls"]
