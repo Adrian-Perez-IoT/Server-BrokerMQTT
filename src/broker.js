@@ -1,5 +1,5 @@
 // Broker MQTT
-/* 
+
 const aedes = require('aedes')()
 const server = require('net').createServer(aedes.handle)
 
@@ -12,7 +12,7 @@ server.listen(port, function () {
 })
 
 
- */
+
 
 
  // aedes.on('clientError', function (client, err) {
