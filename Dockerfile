@@ -19,6 +19,7 @@ COPY package*.json ./
 RUN npm install 
 # RUN npm run build <-- no estaba comentado
 
+COPY ./ ./
 # EXPOSE no publica el puerto, sino que actúa como una manera de documentar qué puertos del contenedor se publicarán en el tiempo de ejecución.
 EXPOSE 80
 # EXPOSE 1883 ¿Quien usa este puerto 1883? Lo deshabilito por las dudas es el motivo de que mi contenedor se detenga
