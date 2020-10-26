@@ -39,4 +39,4 @@ aedes.on('client', function (client) {
   console.log('new client', client.id)
 })
 
-console.log(`Environment: ${process.env.NODE_ENV}`);a
+console.log(`Environment: ${process.env.NODE_ENV}`);
