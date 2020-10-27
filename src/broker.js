@@ -8,14 +8,14 @@ const server = require('net').createServer(aedes.handle)
 const port = 1883
 
 server.listen(port, function () {
-  console.log('server listening on port', port)
+  console.log('Servidor esuchando en el puerto', port)
 })
 
 
 
 
 
- aedes.on('clientError', function (client, err) {
+aedes.on('clientError', function (client, err) {
   console.log('client error', client.id, err.message, err.stack)
 })
 
