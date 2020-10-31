@@ -8,7 +8,7 @@ const server = require('net').createServer(aedes.handle)
 const port = 1883
 
 server.listen(port, function () {
-  console.log('Servidor esuchando en el puerto', port)
+  console.log('Servidor escuchando en puerto', port)
 })
 
 
