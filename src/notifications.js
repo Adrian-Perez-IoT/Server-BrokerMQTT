@@ -44,4 +44,4 @@ function sendMessage(message) {
           console.log('Error sending message:', error);
       })
 }
-
+ 
