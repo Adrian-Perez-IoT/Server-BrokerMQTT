@@ -14,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "aedes": "^0.43.0",
-    "mqtt": "^3.0.0",
-    "uuid": "^8.3.1"
+    "express": "^4.17.1",
+    "firebase-admin": "^9.3.0",
+    "mqtt": "^3.0.0"
   }
 }
