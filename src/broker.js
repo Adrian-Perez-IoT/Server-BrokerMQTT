@@ -1,9 +1,7 @@
 // Broker MQTT
-
 const aedes = require('aedes')()
 const server = require('net').createServer(aedes.handle)
-
-// import ws from 'websocket-stream'
+const Notification = require ("./notifications.js");
 
 const port = 1883
 
@@ -11,12 +9,9 @@ server.listen(port, function () {
   console.log('Servidor escuchando en puerto', port)
 })
 
-
-
-
 aedes.on('clientError', function (client, err) {
   // console.log('Un error en el cliente', client.id, err.message, err.stack)
-  console.log('Un error en el cliente', client.id)
+  console.log('client error', client.id)
 })
 
 aedes.on('connectionError', function (client, err) {
@@ -26,7 +21,8 @@ aedes.on('connectionError', function (client, err) {
 aedes.on('publish', function (packet, client) {
   if (client) {
     console.log('message from client', client.id)
-    console.log('El topic es: ', packet.topic,' El mensaje es: ', packet.payload);
+    console.log('El topic es: ', packet.topic,' El mensaje es: ', packet.payload.toString());
+
   }
 })
 
@@ -40,4 +36,3 @@ aedes.on('client', function (client) {
   console.log('new client', client.id)
 })
 
-console.log(`Environment: ${process.env.NODE_ENV}`);
