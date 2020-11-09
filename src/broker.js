@@ -25,7 +25,7 @@ aedes.on('publish', function (packet, client) {
     console.log('Message from client', client.id);
     console.log('El topic es: ', packet.topic, ' El mensaje es: ', packet.payload.toString()); // Convertir en JSON el paload. evaluarlo (identif sensor). Y notificar (llamar a la funcion) a la app VigBee ().
     //aqui la logica para identificar si el mensaje publicado es un posible amenaza
-    let posibleAmenaza = packet.payload.toString(); //posibleAmenaza debe ser un JSON. ¿Como lo creo?
+    let amenaza = packet.payload.toString(); //posibleAmenaza debe ser un JSON. ¿Como lo creo?
     
     amenaza[tokenId] = "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l";
     amenaza[titulo] = "Alerta de posible amenaza";
