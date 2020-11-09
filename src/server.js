@@ -7,7 +7,7 @@ const app = express();
 app.get("/one-user", function(req,res){
     res.send("sending notification");
     const data = {
-        tokenId: "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l",
+        tokenId: "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l", // Este token lo obtengo llamanado a l a fucnion que recupera el toke de una base de datos. En flutter (dart) creo una funcion que almacene el token el la RTDB
         titulo: "myTitulo",
         mensaje: "mymensaje"
     };

@@ -32,7 +32,21 @@ function sendPushToTopic(notification) {
   sendMessage(message);
 }
 
-module.exports = { sendPushToOneUser, sendPushToTopic }
+function sendAlert(amenaza) {
+    const message = {
+        token: amenaza.tokenId, 
+        data: {
+            titulo: amenaza.titulo,
+            mensaje: amenaza.mensaje,
+            sensor: amenaza.sensor,
+            time: amenaza.time,
+            value: amenaza.value
+        }
+    }
+    sendMessage(message); // antes de enviar mensage, poner previamente la logica para controlar que no se envien notificaciones tan rapido como se reciban los mensages mqtt (1 notificacion por minuto serà suficeinte?)
+  }
+
+module.exports = { sendPushToOneUser, sendPushToTopic, sendAlert }
 
 function sendMessage(message) {
   admin.messaging().send(message)
@@ -45,3 +59,4 @@ function sendMessage(message) {
       })
 }
  
+
