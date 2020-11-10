@@ -22,18 +22,24 @@ aedes.on('connectionError', function (client, err) {
 
 aedes.on('publish', function (packet, client) {
   if (client) {
-    console.log('Message from client', client.id);
-    console.log('El topic es: ', packet.topic, ' El mensaje es: ', packet.payload.toString()); // Convertir en JSON el paload. evaluarlo (identif sensor). Y notificar (llamar a la funcion) a la app VigBee ().
-    //aqui la logica para identificar si el mensaje publicado es un posible amenaza
-    let amenaza = packet.payload.toString(); //posibleAmenaza debe ser un JSON. ¿Como lo creo?
-    
-    amenaza[tokenId] = "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l";
-    amenaza[titulo] = "Alerta de posible amenaza";
-    amenaza[mensaje] = "Movimientos detectado recientemente en tu casa";
-    // convertir en JSON. (Deserializar). Es requisito para enviar un json al VigBee    
-    Notification.sendAlert(amenaza);
-    data = JSON.parse(packet.payload.toString()); // para experimentar si se puede o no.
-    console.log('El pyload convertido a JSON con el metodo parse es (prety): ', data);
+    //aqui la logica para identificar si el mensaje publicado es una posible amenaza
+    /* console.log('Message from client', client.id); */
+
+    if (packet.topic.toString() == "Home/LivingRoom/Motion001") {
+      console.log('Se recibio una publicacion en el topic:', packet.topic, ' Con el mensaje: ', packet.payload.toString()); // Convertir en JSON el paload. evaluarlo (identif sensor). Y notificar (llamar a la funcion) a la app VigBee ().
+
+      
+      let amenaza = JSON.parse(packet.payload.toString()); //amenaza debe ser un JSON. ¿Como lo creo?
+      amenaza["tokenId"] = "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l";
+      amenaza["titulo"] = "Alerta de posible amenaza";
+      amenaza["mensaje"] = "Movimientos detectado recientemente en tu casa";
+      // convierte en JSON. (Deserializar). Es requisito para enviar un json al VigBee   
+      console.log('La amenaza convertido en JSON es (prety): ', amenaza);
+      // Notification.sendAlert(amenaza);// ERROR AQUI . CORREGIR MAÑANA: --> DATA DEBE CONETENR UNICAMENTE CALORES STRING
+    }
+
+    // data = JSON.parse(packet.payload.toString()); // para experimentar si se puede o no.
+
     /* var payload = {
       notification: {
         title: "Alerta de posible amenaza",
