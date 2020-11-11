@@ -71,19 +71,17 @@ aedes.on('publish', function (packet, client) {
   }
 })
 
+//Para que pase 60 segundos,para enviar notificaciones push
 function pasoXtiempo(){
-
   if (bandera == true) {
     bandera = false;
     // console.log("bandera era true, ahora es false por 3 segundos");
   }
   else{
     bandera = true;
-  }
-
-  
+  }  
 }
-setInterval(pasoXtiempo, 60000)
+setInterval(pasoXtiempo, 5000)
 
 aedes.on('subscribe', function (subscriptions, client) {
   if (client) {
