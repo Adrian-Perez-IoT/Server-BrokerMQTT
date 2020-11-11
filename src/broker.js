@@ -38,6 +38,7 @@ aedes.on('publish', function (packet, client) {
         amenaza["tokenId"] = "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l";
         amenaza["titulo"] = "Alerta de posible amenaza";
         amenaza["mensaje"] = "Movimiento detectado";
+        // amenaza["notification"] = {"title" : "titulo array"};
         // Notificar (no cada 1 segundo) cuando hay movimientos constantes dentro de un intervalo de tiempo (1 minuto seguio de movimiento). 
         //O notificar solamente si en los ultimos 30 segundos, existio algun moviimiento.
 
@@ -47,7 +48,7 @@ aedes.on('publish', function (packet, client) {
 
         if(bandera==true){
           // Notification.sendAlert(amenaza);// Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM
-          // console.log("Notification.sendAlert cada 30 segundos pue");
+          console.log("Notification.sendAlert cada X segundos pue");
           Notification.sendAlert(amenaza);         // Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM        }
         
 
@@ -81,7 +82,7 @@ function pasoXtiempo(){
     bandera = true;
   }  
 }
-setInterval(pasoXtiempo, 5000)
+setInterval(pasoXtiempo, 3000)
 
 aedes.on('subscribe', function (subscriptions, client) {
   if (client) {
