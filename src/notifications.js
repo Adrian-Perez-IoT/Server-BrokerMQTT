@@ -46,8 +46,8 @@ function sendAlert(amenaza) {
         token: amenaza.tokenId,
         data: {
             sensor: amenaza.sensor,
-            time: amenaza.time,
-            value: amenaza.value
+            time: amenaza.time.toString(),
+            value: amenaza.value.toString()
         },
         
     }

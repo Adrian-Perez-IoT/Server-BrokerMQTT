@@ -27,12 +27,12 @@ aedes.on('publish', function (packet, client) {
     //aqui la logica para identificar si el mensaje publicado es una posible amenaza
     /* console.log('Message from client', client.id); */
     //agregar logia switch case --> topic motion, door, gas. 
-    if (packet.topic.toString() == "Home/LivingRoom/Motion001") {
+    if (packet.topic.toString() == "Casa/LivingRoom/Movimiento") {
       // console.log('Se recibio una publicacion en el topic:', packet.topic, ' Con el mensaje: ', packet.payload.toString()); // Convertir en JSON el paload. evaluarlo (identif sensor). Y notificar (llamar a la funcion) a la app VigBee ().      
 
 
       let amenaza = JSON.parse(packet.payload.toString()); //amenaza debe ser un JSON. ¿Como lo creo?
-      if (amenaza["value"] == "true") {
+      if (amenaza["value"] == true) {
         // añadir la logica para que se notifique cada minuto (para no hacerlo cada 5 segundos que saturarà la app vigbee/Backend FCM/ Backend MQTT?
         console.log('En el broker mqtt se pubilco el siguiente mensaje:', amenaza);
         // amenaza["tokenId"] = "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l";
@@ -83,7 +83,7 @@ function pasoXtiempo(){
     bandera = true;
   }  
 }
-setInterval(pasoXtiempo, 3000)
+setInterval(pasoXtiempo, 1500)
 
 aedes.on('subscribe', function (subscriptions, client) {
   if (client) {
