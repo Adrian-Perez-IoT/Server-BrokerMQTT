@@ -43,7 +43,7 @@ function sendAlert(amenaza) {
                 sound: 'default'
             },
         },
-        token: amenaza.tokenId,
+        token: leerTokenDevicefromFirestoreDB(),
         data: {
             sensor: amenaza.sensor,
             time: amenaza.time.toString(),
@@ -68,3 +68,6 @@ function sendMessage(message) {
 }
 
 
+function leerTokenDevicefromFirestoreDB() {
+    return "dcS-sFSue18:APA91bFVq64WRhbmIjTerQdZ0w--cjaYyLJov7U9Eprx-IcbxTWqNHRz6Lb43NIER7UtbUVo0GPMVsrMbJvYaiWLKPzYicD8L9La_MWe6H25A2_exgsJAlAlm4QHkjIWgL5BOpNTV2eW";
+  }
