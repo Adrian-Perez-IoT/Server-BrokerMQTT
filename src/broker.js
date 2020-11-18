@@ -8,7 +8,7 @@ const port = 1883
 console.log(`Environment: ${process.env.NODE_ENV}`);
 
 server.listen(port, function () {
-  console.log('Servidor MQTT escuchando en puerto', port);
+  console.log('Servidor MQTT escuchando en puerto: ', port);
 })
 
 aedes.on('clientError', function (client, err) {
