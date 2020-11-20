@@ -60,7 +60,8 @@ function sendMessage(message) {
     admin.messaging().send(message)
         .then((response) => {
             // Response is a message ID string.
-            console.log('Successfully sent message:', response);
+            // console.log('Successfully sent message :', response);
+            console.log(`Amenaza ${message["data"]["sensor"]} notificada satisfactoriamente: ${response}`);
         })
         .catch((error) => {
             console.log('Error sending message:', error);
@@ -69,5 +70,6 @@ function sendMessage(message) {
 
 
 function leerTokenDevicefromFirestoreDB() {
-    return "dcS-sFSue18:APA91bFVq64WRhbmIjTerQdZ0w--cjaYyLJov7U9Eprx-IcbxTWqNHRz6Lb43NIER7UtbUVo0GPMVsrMbJvYaiWLKPzYicD8L9La_MWe6H25A2_exgsJAlAlm4QHkjIWgL5BOpNTV2eW";
+    // return "dcS-sFSue18:APA91bFVq64WRhbmIjTerQdZ0w--cjaYyLJov7U9Eprx-IcbxTWqNHRz6Lb43NIER7UtbUVo0GPMVsrMbJvYaiWLKPzYicD8L9La_MWe6H25A2_exgsJAlAlm4QHkjIWgL5BOpNTV2eW";
+    return "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l";
   }
