@@ -34,17 +34,18 @@ aedes.on('publish', function (packet, client) {
         // console.log("Es un json");
         let mensajeMqtt = JSON.parse(packet.payload.toString()); //mensajeMqtt debe ser un JSON. ¿Como lo creo?
         if (mensajeMqtt["value"] == true) {
-          // añadir la logica para que se notifique cada minuto (para no hacerlo cada 5 segundos que saturarà la app vigbee/Backend FCM/ Backend MQTT?
+          // Notifica cada 5 minuto (para no saturar la app vigbee/Backend Firebase / Backend MQTT?
           console.log('Amenaza publicada:', mensajeMqtt);
           // mensajeMqtt["tokenId"] = "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l";
           mensajeMqtt["titulo"] = "Alerta de amenaza";
-          mensajeMqtt["mensaje"] = "Se detecto una posible amenaza en su vivienda";
-          //Si paso 1 minuto desde la ultima notificacion, entonces notifico nuevamente. (para no saturar)        
+          mensajeMqtt["mensaje"] = `El sensor ${mensajeMqtt["sensor"]} detecto a las ${mensajeMqtt["time"]} hs una posible amenaza en su vivienda`;
+          //Si paso 1 minutos desde la ultima notificacion, entonces notifico nuevamente. (para no saturar)        
           if ((paso1minutoUltimoMovimiento == true) && (packet.topic.toString() == "Casa/LivingRoom/Movimiento")) {
-            // Notification.sendAlert(mensajeMqtt);// Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM
+            Notification.guardarAmenaza(mensajeMqtt);
+            Notification.sendAlert(mensajeMqtt);         // Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM        }                    
             // console.log("Movimiento notificado al smartphone");
-            Notification.sendAlert(mensajeMqtt);         // Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM        }        
             paso1minutoUltimoMovimiento = false;
+            // guardo amenaza en la BD (despues cambiar de lugar esta funcion)            
           }
           if ((paso1minutoUltimoAperturaPorton == true) && (packet.topic.toString() == "Casa/Garage/Porton")) {
             // Notification.sendAlert(mensajeMqtt);// Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM
@@ -57,6 +58,10 @@ aedes.on('publish', function (packet, client) {
             // console.log("Monoxido Carbono notificado al smartphone");
             Notification.sendAlert(mensajeMqtt);         // Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM        }        
             paso1minutoUltimoDetecGas = false;
+            
+          }
+          if ( (paso1minutoUltimoMovimiento) || (paso1minutoUltimoAperturaPorton) || (paso1minutoUltimoDetecGas)){
+            // Notification.guardarAmenaza(mensajeMqtt);
           }
         }
       }
@@ -105,4 +110,8 @@ function isJSON(str) {
     return false;
   }
   return true;
+}
+
+async function guardarAmenaza(amenaza){ // agregar typado al argumento de la funcion 
+
 }

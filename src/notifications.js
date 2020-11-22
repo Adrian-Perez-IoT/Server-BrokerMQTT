@@ -10,6 +10,8 @@ function initFirebase() {
 
 initFirebase();
 
+var db = admin.firestore();
+
 function sendPushToOneUser(notification) {
     const message = {
         token: notification.tokenId,
@@ -36,7 +38,7 @@ function sendAlert(amenaza) {
     const message = {
         notification: {
             title: amenaza.titulo,
-            body: amenaza.mensaje,            
+            body: amenaza.mensaje,
         },
         android: {
             notification: {
@@ -49,12 +51,9 @@ function sendAlert(amenaza) {
             time: amenaza.time.toString(),
             value: amenaza.value.toString()
         },
-        
     }
-    sendMessage(message); // antes de enviar mensage, poner previamente la logica para controlar que no se envien notificaciones tan rapido como se reciban los mensages mqtt (1 notificacion por minuto serà suficeinte?)
+    sendMessage(message);
 }
-
-module.exports = { sendPushToOneUser, sendPushToTopic, sendAlert }
 
 function sendMessage(message) {
     admin.messaging().send(message)
@@ -68,8 +67,42 @@ function sendMessage(message) {
         })
 }
 
-
 function leerTokenDevicefromFirestoreDB() {
     // return "dcS-sFSue18:APA91bFVq64WRhbmIjTerQdZ0w--cjaYyLJov7U9Eprx-IcbxTWqNHRz6Lb43NIER7UtbUVo0GPMVsrMbJvYaiWLKPzYicD8L9La_MWe6H25A2_exgsJAlAlm4QHkjIWgL5BOpNTV2eW";
-    return "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l";
-  }
+    return "dOLhex-gfLY:APA91bHDksOk8SmZKCJ1Nrfo5p5txUPyTkO_yb88tARjv7bsoUEl-whyNiofd3zAYKqNn3A7A4Cl6m4Yl2S5z8vjGizgjjuhIcQYUyl5joa_Rp0_KSALaxGI8yIiqBgIkt1bU7gB8ln_";
+}
+
+function guardarAmenaza(amenaza) {
+    db.collection('amenazas').add({
+        time: amenaza["time"],
+        sensor: amenaza["sensor"],
+    })
+        .then(function (docRef) {
+            console.log("Amenaza escrita en la BD con id:", docRef.id);
+        })
+        .catch(function (error) {
+            console.error("Error editando el documento", error);
+        });
+
+
+    /* 
+    const docRef = db.collection("sales").doc("2015");
+    docRef.get().then(function (doc) {
+        if (doc.exists) console.log("Doc existe");
+        else console.log("no existe");
+    }).catch(function (error) {
+        console.log("Error");
+    });
+    
+    db.collection("amenazasDetectadas").get().then((querySnapshot)=>{
+        querySnapshot.forEach((doc)=>{
+            console.log(`${doc.id}=>${doc.data()["sensor"]}`);
+        });
+    });
+    */
+
+
+
+}
+
+module.exports = { sendPushToOneUser, sendPushToTopic, sendAlert, guardarAmenaza }
