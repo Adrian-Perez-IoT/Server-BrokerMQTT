@@ -73,36 +73,16 @@ function leerTokenDevicefromFirestoreDB() {
 }
 
 function guardarAmenaza(amenaza) {
-    db.collection('amenazas').add({
+    db.collection('alertas.de.amenaza').add({
         time: amenaza["time"],
         sensor: amenaza["sensor"],
     })
         .then(function (docRef) {
-            console.log("Amenaza escrita en la BD con id:", docRef.id);
+            console.log(`Amenaza ${amenaza["sensor"]} registrada en DB con id: ${docRef.id}`);
         })
         .catch(function (error) {
             console.error("Error editando el documento", error);
         });
-
-
-    /* 
-    const docRef = db.collection("sales").doc("2015");
-    docRef.get().then(function (doc) {
-        if (doc.exists) console.log("Doc existe");
-        else console.log("no existe");
-    }).catch(function (error) {
-        console.log("Error");
-    });
-    
-    db.collection("amenazasDetectadas").get().then((querySnapshot)=>{
-        querySnapshot.forEach((doc)=>{
-            console.log(`${doc.id}=>${doc.data()["sensor"]}`);
-        });
-    });
-    */
-
-
-
 }
 
 module.exports = { sendPushToOneUser, sendPushToTopic, sendAlert, guardarAmenaza }

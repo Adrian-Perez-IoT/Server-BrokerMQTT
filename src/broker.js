@@ -24,6 +24,7 @@ let paso1minutoUltimoMovimiento = true; // para marcar cuando haya pasado 30 seg
 let paso1minutoUltimoAperturaPorton = true;
 let paso1minutoUltimoDetecGas = true;
 
+//la funcion qye se ajecuta debera ser asinconica? /buscar tutoriales con mqtt aedes)
 aedes.on('publish', function (packet, client) {
   if (client) {
     /* console.log('Message from client', client.id); */
@@ -50,12 +51,14 @@ aedes.on('publish', function (packet, client) {
           if ((paso1minutoUltimoAperturaPorton == true) && (packet.topic.toString() == "Casa/Garage/Porton")) {
             // Notification.sendAlert(mensajeMqtt);// Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM
             // console.log("Apertura del porton notificado al smartphone");
+            Notification.guardarAmenaza(mensajeMqtt);
             Notification.sendAlert(mensajeMqtt);         // Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM        }        
             paso1minutoUltimoAperturaPorton = false;
           }
           if ((paso1minutoUltimoDetecGas == true) && (packet.topic.toString() == "Casa/Cocina/MonoxidoCarbono")) {
             // Notification.sendAlert(mensajeMqtt);// Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM
             // console.log("Monoxido Carbono notificado al smartphone");
+            Notification.guardarAmenaza(mensajeMqtt);
             Notification.sendAlert(mensajeMqtt);         // Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM        }        
             paso1minutoUltimoDetecGas = false;
             
