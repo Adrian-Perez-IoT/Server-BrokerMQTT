@@ -38,11 +38,12 @@ function sendAlert(amenaza) {
     const message = {
         notification: {
             title: amenaza.titulo,
-            body: amenaza.mensaje,
-        },
+            body: amenaza.mensaje,                        
+        },        
         android: {
             notification: {
-                sound: 'default'
+                sound: 'default',
+                click_action: "FLUTTER_NOTIFICATION_CLICK",
             },
         },
         token: leerTokenDevicefromFirestoreDB(),

@@ -93,7 +93,7 @@ function pasoXtiempo() {
   }
 }
 //300000 mseg son 5 minutos
-setInterval(pasoXtiempo, 300000)
+setInterval(pasoXtiempo, 7000)
 
 aedes.on('subscribe', function (subscriptions, client) {
   if (client) {
