@@ -71,8 +71,6 @@ aedes.on('publish', function (packet, client) {
       else {
         console.log("ERROR Message: DATO recibido no es JSON");
       }
-
-
     }
   }
 })
@@ -88,9 +86,9 @@ function obtenerHorario(timestamp) {
   let stringC = stringA + " " + stringB + " GMT+1800";
   // console.log(stringC);
   // console.log(data0.getTimezoneOffset());
-  var data1 = new Date(stringC);
-  // console.log(data1);
-  return data1.toLocaleTimeString();
+  var dateLocal = new Date(stringC);
+  // console.log(dateLocal.toUTCString());
+  return dateLocal.toLocaleTimeString();
   // var date = new Date(timestamp * 1000).toLocaleTimeString();
   // console.log(date.toUTCString());
   // console.log(date.toLocaleDateString());
@@ -127,7 +125,7 @@ function pasoXtiempo() {
   }
 }
 //300000 mseg son 5 minutos
-setInterval(pasoXtiempo, 40000)
+setInterval(pasoXtiempo, 50000)
 
 aedes.on('subscribe', function (subscriptions, client) {
   if (client) {
@@ -147,8 +145,4 @@ function isJSON(str) {
     return false;
   }
   return true;
-}
-
-async function guardarAmenaza(amenaza) { // agregar typado al argumento de la funcion 
-
 }
