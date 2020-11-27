@@ -83,7 +83,8 @@ function obtenerHorario(timestamp) {
   // console.log(stringA);
   // console.log(stringB);
   // let stringC = stringA + " " + stringB + " UTC+1800";
-  let stringC = stringA + " " + stringB + " GMT+1800";
+  // let stringC = stringA + " " + stringB + " GMT+1800"; // +1800 para servidor local (argentina)
+  let stringC = stringA + " " + stringB + " GMT+0000"; // +1800 para servidor cloud (brazilia?EEUU)
   // console.log(stringC);
   console.log(data0.getTimezoneOffset());
   var dateLocal = new Date(stringC);
