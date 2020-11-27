@@ -85,7 +85,7 @@ function obtenerHorario(timestamp) {
   // let stringC = stringA + " " + stringB + " UTC+1800";
   let stringC = stringA + " " + stringB + " GMT+1800";
   // console.log(stringC);
-  // console.log(data0.getTimezoneOffset());
+  console.log(data0.getTimezoneOffset());
   var dateLocal = new Date(stringC);
   // console.log(dateLocal.toUTCString());
   return dateLocal.toLocaleTimeString();
