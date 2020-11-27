@@ -33,13 +33,13 @@ aedes.on('publish', function (packet, client) {
 
       if (isJSON(packet.payload.toString())) {
         // console.log("Es un json");
-        let mensajeMqtt = JSON.parse(packet.payload.toString()); //mensajeMqtt debe ser un JSON. ¿Como lo creo?
+        let mensajeMqtt = JSON.parse(packet.payload.toString()); //mensajeMqtt debe ser un JSON. ¿Como lo creo?        
         if (mensajeMqtt["value"] == true) {
-          // Notifica cada 5 minuto (para no saturar la app vigbee/Backend Firebase / Backend MQTT?
           console.log('Amenaza publicada:', mensajeMqtt);
-          // mensajeMqtt["tokenId"] = "esXH_nLk5F0:APA91bGIPzBuU0yAHAe2wfLlGZYEhfuMO0o8sHDb3CAsr1ZzcnPmIcqrZwP4mSvX5aB2qoLYLgG7W2_A-iaE0gq4m0qSXyYY2gKAWPLxw9aK6wm058-jdYGXyuGrLnbt-PF8YhxjPx9l";
-          mensajeMqtt["titulo"] = "Alerta de amenaza";
-          mensajeMqtt["mensaje"] = `El sensor ${mensajeMqtt["sensor"]} detecto a las ${mensajeMqtt["time"]} hs una posible amenaza en su vivienda`;
+          let horario_exacto = obtenerHorario(mensajeMqtt["time"]);
+          let sensor_name = (mensajeMqtt["sensor"] == "PIR") ? "de movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "magnetico" : "gas toxico";
+          mensajeMqtt["titulo"] = (mensajeMqtt["sensor"] == "PIR") ? "Alerta de Movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "Alerta Apertura del Porton" : "Peligro Monoxido de Carbono";
+          mensajeMqtt["mensaje"] = `El sensor ${sensor_name} detecto a las ${horario_exacto} una posible amenaza.`;
           //Si paso 1 minutos desde la ultima notificacion, entonces notifico nuevamente. (para no saturar)        
           if ((paso1minutoUltimoMovimiento == true) && (packet.topic.toString() == "Casa/LivingRoom/Movimiento")) {
             Notification.guardarAmenaza(mensajeMqtt);
@@ -61,9 +61,9 @@ aedes.on('publish', function (packet, client) {
             Notification.guardarAmenaza(mensajeMqtt);
             Notification.sendAlert(mensajeMqtt);         // Esta funcion debe ser asyn. Demora aprox 1 a 3 segundos en recibir una respuesta del Servidor Backend FCM        }        
             paso1minutoUltimoDetecGas = false;
-            
+
           }
-          if ( (paso1minutoUltimoMovimiento) || (paso1minutoUltimoAperturaPorton) || (paso1minutoUltimoDetecGas)){
+          if ((paso1minutoUltimoMovimiento) || (paso1minutoUltimoAperturaPorton) || (paso1minutoUltimoDetecGas)) {
             // Notification.guardarAmenaza(mensajeMqtt);
           }
         }
@@ -76,6 +76,40 @@ aedes.on('publish', function (packet, client) {
     }
   }
 })
+
+function obtenerHorario(timestamp) {
+  /* LUEGO REFACTORIZAR ESTA FUNCION UTILIZANDO LA LIBRERIA MOMENT.JS CON TIMESTAMP */
+  var data0 = new Date();
+  var stringA = new Date(timestamp * 1000).toLocaleDateString();
+  var stringB = new Date(timestamp * 1000).toLocaleTimeString();
+  // console.log(stringA);
+  // console.log(stringB);
+  // let stringC = stringA + " " + stringB + " UTC+1800";
+  let stringC = stringA + " " + stringB + " GMT+1800";
+  // console.log(stringC);
+  // console.log(data0.getTimezoneOffset());
+  var data1 = new Date(stringC);
+  // console.log(data1);
+  return data1.toLocaleTimeString();
+  // var date = new Date(timestamp * 1000).toLocaleTimeString();
+  // console.log(date.toUTCString());
+  // console.log(date.toLocaleDateString());
+
+
+  // Hours part from the timestamp
+  // var hours = date.getHours();
+  // Minutes part from the timestamp
+  // var minutes = "0" + date.getMinutes();
+  // Seconds part from the timestamp
+  // var seconds = "0" + date.getSeconds();
+
+  // Will display time in 10:30:23 format
+  // var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+  // return "xxx";
+
+  // return formattedTime.toString();
+  
+}
 
 //Para ejecutar la funcion sendNotification cada 180000 milisegundos
 function pasoXtiempo() {
@@ -93,7 +127,7 @@ function pasoXtiempo() {
   }
 }
 //300000 mseg son 5 minutos
-setInterval(pasoXtiempo, 7000)
+setInterval(pasoXtiempo, 40000)
 
 aedes.on('subscribe', function (subscriptions, client) {
   if (client) {
@@ -115,6 +149,6 @@ function isJSON(str) {
   return true;
 }
 
-async function guardarAmenaza(amenaza){ // agregar typado al argumento de la funcion 
+async function guardarAmenaza(amenaza) { // agregar typado al argumento de la funcion 
 
 }
