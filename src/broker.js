@@ -37,7 +37,7 @@ aedes.on('publish', function (packet, client) {
         if (mensajeMqtt["value"] == true) {
           console.log('Amenaza publicada:', mensajeMqtt);
           let horario_exacto = obtenerHorario(mensajeMqtt["time"]);
-          let sensor_name = (mensajeMqtt["sensor"] == "PIR") ? "de movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "magnetico" : "gas toxico";
+          let sensor_name = (mensajeMqtt["sensor"] == "PIR") ? "de movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "magnetico" : "de gas toxico";
           mensajeMqtt["titulo"] = (mensajeMqtt["sensor"] == "PIR") ? "Alerta de Movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "Alerta Apertura del Porton" : "Peligro Monoxido de Carbono";
           mensajeMqtt["mensaje"] = `El sensor ${sensor_name} detecto a las ${horario_exacto} una posible amenaza.`;
           //Si paso 1 minutos desde la ultima notificacion, entonces notifico nuevamente. (para no saturar)        
