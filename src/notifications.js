@@ -38,8 +38,8 @@ function sendAlert(amenaza) {
     const message = {
         notification: {
             title: amenaza.titulo,
-            body: amenaza.mensaje,                        
-        },        
+            body: amenaza.mensaje,
+        },
         android: {
             notification: {
                 sound: 'default',
@@ -86,4 +86,25 @@ function guardarAmenaza(amenaza) {
         });
 }
 
-module.exports = { sendPushToOneUser, sendPushToTopic, sendAlert, guardarAmenaza }
+function actualizarFirestore(coleccion, mensaje) {
+    db.collection(coleccion).doc("pir").update(
+        /* {
+            "value": mensaje["value"],
+            "nombre": mensaje["sensor"],
+        } */
+        mensaje
+    );
+    /* db.collection(coleccion).add({
+        datoAdibujar,
+        // time: amenaza["time"],
+        // sensor: amenaza["sensor"],
+    })
+        .then(function (docRef) {
+            console.log(`dato a dibujar se guardo satisfactoriamente con id: ${docRef.id}`);
+        })
+        .catch(function (error) {
+            console.error("Error editando el documento colecion movimiento dato a dibujar", error);
+        }); */
+}
+
+module.exports = { sendPushToOneUser, sendPushToTopic, sendAlert, guardarAmenaza, actualizarFirestore }
