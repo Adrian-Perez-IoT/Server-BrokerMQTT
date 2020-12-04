@@ -86,25 +86,16 @@ function guardarAmenaza(amenaza) {
         });
 }
 
-function actualizarFirestore(coleccion, mensaje) {
-    db.collection(coleccion).doc("pir").update(
-        /* {
-            "value": mensaje["value"],
-            "nombre": mensaje["sensor"],
-        } */
-        mensaje
-    );
-    /* db.collection(coleccion).add({
-        datoAdibujar,
-        // time: amenaza["time"],
-        // sensor: amenaza["sensor"],
-    })
-        .then(function (docRef) {
-            console.log(`dato a dibujar se guardo satisfactoriamente con id: ${docRef.id}`);
+function actualizarFirestore(destino, mensaje) {
+    db.collection(destino["coleccion"]).doc(destino["documento"]).update(mensaje)
+        .then(function () {
+            // console.log("Document successfully updated!");
         })
-        .catch(function (error) {
-            console.error("Error editando el documento colecion movimiento dato a dibujar", error);
-        }); */
+        .catch(function () {
+            // The document probably doesn't exist.
+            console.error("ActualizarFirestore: Error updating document: ", error);
+        });
+
 }
 
 module.exports = { sendPushToOneUser, sendPushToTopic, sendAlert, guardarAmenaza, actualizarFirestore }

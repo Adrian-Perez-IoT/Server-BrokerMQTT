@@ -35,7 +35,7 @@ aedes.on('publish', function (packet, client) {
         let mensajeMqtt = JSON.parse(packet.payload.toString()); //mensajeMqtt debe ser un JSON
         // guardarUltimas60Lecturas(mensajeMqtt); // fucnion que guarda ultimas 60 lecturas (true o false) del sensor movimiento
         streamSensorRead(mensajeMqtt); // funcion para transmitir la ultima lectura de cada sensor
-        
+
         if (mensajeMqtt["value"] == true) {
           console.log('Amenaza publicada en Servidor:', mensajeMqtt);
           let horario_exacto = obtenerHorario(mensajeMqtt["time"]); // añadir la obtencion de horario del servidor local o servidor cloud segun la variable Encironment
@@ -77,21 +77,36 @@ aedes.on('publish', function (packet, client) {
   }
 })
 
-//poner una restriccion para que se ejecute la funcion cada 2 segundos( evita congestionar firestore)
+//poner una restriccion para que se ejecute la funcion cada ¿2? segundos(¿evita congestionar firestore?)
 function streamSensorRead(mensaje) {
+  // pre-condicion: La coleccion y documento deben estar previamente creados en firestore
   console.log(`Es lectura ${mensaje["sensor"]} con valor: ${mensaje["value"].toString()}`);
-  if (mensaje["sensor"]== "PIR"){    
-    Notification.actualizarFirestore("lecturasSensor", mensaje); //aqui debo pasarle como parametro la colecion, y obviamente el documento a actualizar
+  switch (mensaje["sensor"]) {
+    case "PIR":
+      Notification.actualizarFirestore({coleccion:"lecturasSensor",documento:"pir"}, mensaje); //aqui debo pasarle como parametro la colecion, y obviamente el documento a actualizar      
+      break;
+    case "MAGNETIC":
+        Notification.actualizarFirestore({coleccion:"lecturasSensor",documento:"magnetico"}, mensaje); //aqui debo pasarle como parametro la colecion, y obviamente el documento a actualizar      
+      break;
+    case "MQ7":
+        Notification.actualizarFirestore({coleccion:"lecturasSensor",documento:"mq7"}, mensaje); //aqui debo pasarle como parametro la colecion, y obviamente el documento a actualizar      
+      break;
+    default:
+      console.error("Error Function StreamSensorRead: No se reconoce nombre del sensor ")
+      break;
+  }
+  if (mensaje["sensor"] == "PIR") {
+
   }
 }
 
-let datoAdibujar = [0,1,0,1,0,1,0,1,0];
+let datoAdibujar = [0, 1, 0, 1, 0, 1, 0, 1, 0];
 
 // hacer de esta funcion asincorona porque creara muchos hilos que guardaran mensajes y se destruiran. ¿?
-function guardarUltimas60Lecturas(mensaje){
-  if (mensaje["sensor"]== "PIR"){
+function guardarUltimas60Lecturas(mensaje) {
+  if (mensaje["sensor"] == "PIR") {
     console.log("ES lECTURA PIR", mensaje["value"].toString());
-    Notification.actualizarFirestore("ultimas60Lecturas",datoAdibujar); //aqui debo pasarle como parametro la colecion, y obviamente el documento a actualizar
+    Notification.actualizarFirestore("ultimas60Lecturas", datoAdibujar); //aqui debo pasarle como parametro la colecion, y obviamente el documento a actualizar
   }
 }
 
@@ -127,7 +142,7 @@ function obtenerHorario(timestamp) {
   // return "xxx";
 
   // return formattedTime.toString();
-  
+
 }
 
 //Para ejecutar la funcion sendNotification cada 180000 milisegundos
