@@ -1,10 +1,17 @@
 const admin = require("firebase-admin");
 
-function initFirebase() {
+/* function initFirebase() {
     const serviceAccount = require("../key/testnotificationpushflutter-firebase-adminsdk-614sv-b391a4e5b1.json");
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
         databaseURL: "https://testnotificationpushflutter.firebaseio.com"
+    });
+}; */
+function initFirebase() {
+    const serviceAccount = require("../key/smarthouse-c4210-firebase-adminsdk-c7pff-d9224cb645");
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: "https://smarthouse-c4210.firebaseio.com" /* LUEGO REVISAR SI ES CORRECTA EL NOMBRE DE LA databaseURL */
     });
 };
 
@@ -68,9 +75,8 @@ function sendMessage(message) {
         })
 }
 
-function leerTokenDevicefromFirestoreDB() {
-    // return "dcS-sFSue18:APA91bFVq64WRhbmIjTerQdZ0w--cjaYyLJov7U9Eprx-IcbxTWqNHRz6Lb43NIER7UtbUVo0GPMVsrMbJvYaiWLKPzYicD8L9La_MWe6H25A2_exgsJAlAlm4QHkjIWgL5BOpNTV2eW";
-    return "dOLhex-gfLY:APA91bHDksOk8SmZKCJ1Nrfo5p5txUPyTkO_yb88tARjv7bsoUEl-whyNiofd3zAYKqNn3A7A4Cl6m4Yl2S5z8vjGizgjjuhIcQYUyl5joa_Rp0_KSALaxGI8yIiqBgIkt1bU7gB8ln_";
+function leerTokenDevicefromFirestoreDB() {    
+    return "eAt7XP3yRbaJGvdcuRr7Vw:APA91bE7g8qD2BRKOB7g9GgvOrhk0k6C4LOxOKQjsMrf9n6eUYr9dbMT_0WquEreBXXiDqM3u7U2N1UIhziuAy-nOXkuUzSDstCLl1SRuc0Z7ywgiki9GX2SB9U1S7WNhzARTVnM4rUP";
 }
 
 function guardarAmenaza(amenaza) {

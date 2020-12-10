@@ -24,7 +24,6 @@ let paso1minutoUltimoMovimiento = true; // para marcar cuando haya pasado 30 seg
 let paso1minutoUltimoAperturaPorton = true;
 let paso1minutoUltimoDetecGas = true;
 
-//la funcion qye se ajecuta debera ser asinconica? /buscar tutoriales con mqtt aedes)
 aedes.on('publish', function (packet, client) {
   if (client) {
     /* console.log('Message from client', client.id); */
