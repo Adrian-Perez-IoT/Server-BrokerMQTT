@@ -75,7 +75,7 @@ function sendMessage(message) {
         })
 }
 
-function leerTokenDevicefromFirestoreDB() {    
+function leerTokenDevicefromFirestoreDB() {
     return "eAt7XP3yRbaJGvdcuRr7Vw:APA91bE7g8qD2BRKOB7g9GgvOrhk0k6C4LOxOKQjsMrf9n6eUYr9dbMT_0WquEreBXXiDqM3u7U2N1UIhziuAy-nOXkuUzSDstCLl1SRuc0Z7ywgiki9GX2SB9U1S7WNhzARTVnM4rUP";
 }
 
@@ -92,8 +92,12 @@ function guardarAmenaza(amenaza) {
         });
 }
 
-function actualizarFirestore(destino, mensaje) {
-    db.collection(destino["coleccion"]).doc(destino["documento"]).update(mensaje)
+function actualizarFirestore(destino, mensaje) {    
+    const mensaje2 = mensaje;
+    if (mensaje["value"] == true) {
+        mensaje2["ultimaAmenaza"] = mensaje["time"];
+    }    
+    db.collection(destino["coleccion"]).doc(destino["documento"]).update(mensaje2)
         .then(function () {
             // console.log("Document successfully updated!");
         })

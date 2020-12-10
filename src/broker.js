@@ -36,7 +36,7 @@ aedes.on('publish', function (packet, client) {
         streamSensorRead(mensajeMqtt); // funcion para transmitir la ultima lectura de cada sensor
 
         if (mensajeMqtt["value"] == true) {
-          console.log('Amenaza publicada en Servidor:', mensajeMqtt);
+          console.log('Amenaza indetificada: ', JSON.parse(packet.payload.toString()));
           let horario_exacto = obtenerHorario(mensajeMqtt["time"]); // añadir la obtencion de horario del servidor local o servidor cloud segun la variable Encironment
           let sensor_name = (mensajeMqtt["sensor"] == "PIR") ? "de movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "magnetico" : "de gas toxico";
           mensajeMqtt["titulo"] = (mensajeMqtt["sensor"] == "PIR") ? "Alerta de Movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "Alerta Apertura del Porton" : "Peligro Monoxido de Carbono";
@@ -79,7 +79,7 @@ aedes.on('publish', function (packet, client) {
 //poner una restriccion para que se ejecute la funcion cada ¿2? segundos(¿evita congestionar firestore?)
 function streamSensorRead(mensaje) {
   // pre-condicion: La coleccion y documento deben estar previamente creados en firestore
-  console.log(`Es lectura ${mensaje["sensor"]} con valor: ${mensaje["value"].toString()}`);
+  console.log(`Lectura del sensor ${mensaje["sensor"]}: ${mensaje["value"].toString()}`);
   switch (mensaje["sensor"]) {
     case "PIR":
       Notification.actualizarFirestore({coleccion:"lecturasSensor",documento:"pir"}, mensaje); //aqui debo pasarle como parametro la colecion, y obviamente el documento a actualizar      
@@ -160,7 +160,8 @@ function pasoXtiempo() {
   }
 }
 //300000 mseg son 5 minutos
-setInterval(pasoXtiempo, 50000)
+//120000 msegu = 2 minutos
+setInterval(pasoXtiempo, 120000)
 
 aedes.on('subscribe', function (subscriptions, client) {
   if (client) {
