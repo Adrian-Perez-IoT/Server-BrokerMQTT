@@ -68,7 +68,8 @@ function sendMessage(message) {
         .then((response) => {
             // Response is a message ID string.
             // console.log('Successfully sent message :', response);
-            console.log(`Amenaza ${message["data"]["sensor"]} notificada satisfactoriamente: ${response}`);
+            // console.log(`Amenaza ${message["data"]["sensor"]} notificada satisfactoriamente: ${response}`);
+            console.log(`^^^^^^ Amenaza notificada satisfactoriamente. ^^^^^^`);
         })
         .catch((error) => {
             console.log('Error sending message:', error);
@@ -85,7 +86,8 @@ function guardarAmenaza(amenaza) {
         sensor: amenaza["sensor"],
     })
         .then(function (docRef) {
-            console.log(`Amenaza ${amenaza["sensor"]} registrada en DB con id: ${docRef.id}`);
+            // console.log(`Amenaza ${amenaza["sensor"]} registrada satisfactoriamente en la Base de Datos con id: ${docRef.id}`);
+            console.log(`****** Amenaza registrada en la Base de Datos. ******`);
         })
         .catch(function (error) {
             console.error("Error editando el documento", error);
