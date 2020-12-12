@@ -39,8 +39,10 @@ aedes.on('publish', function (packet, client) {
           console.log('Amenaza indetificada: ', JSON.parse(packet.payload.toString()));
           let horario_exacto = obtenerHorario(mensajeMqtt["time"]); // añadir la obtencion de horario del servidor local o servidor cloud segun la variable Encironment
           let sensor_name = (mensajeMqtt["sensor"] == "PIR") ? "de movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "magnetico" : "de gas toxico";
+          let nombre_amenaza = (mensajeMqtt["sensor"] == "PIR") ? "movimientos en la Sala" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "la apertura del porton en el garage" : "gas toxico en la cocina";
           mensajeMqtt["titulo"] = (mensajeMqtt["sensor"] == "PIR") ? "Alerta de Movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "Alerta Apertura del Porton" : "Peligro Monoxido de Carbono";
-          mensajeMqtt["mensaje"] = `El sensor ${sensor_name} detecto a las ${horario_exacto} una posible amenaza.`;
+          // mensajeMqtt["mensaje"] = `El sensor ${sensor_name} detecto a las ${horario_exacto} una posible amenaza.`;
+          mensajeMqtt["mensaje"] = `Se detecto a las ${horario_exacto} ${nombre_amenaza}.`;
           //Si paso 1 minutos desde la ultima notificacion, entonces notifico nuevamente. (para no saturar)        
           if ((paso1minutoUltimoMovimiento == true) && (packet.topic.toString() == "Casa/LivingRoom/Movimiento")) {
             Notification.guardarAmenaza(mensajeMqtt);
