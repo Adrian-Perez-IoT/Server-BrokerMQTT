@@ -5,11 +5,13 @@ const Notification = require("./notifications.js");
 
 const port = 1883
 
-console.log(`Environment: ${process.env.NODE_ENV}`);
 
 server.listen(port, function () {
-  console.log('Servidor MQTT escuchando en puerto: ', port);
+  console.log('Servidor Backend escuchando en puerto: ', port);
+  // console.log(`Environment: ${process.env.NODE_ENV}`);
 })
+
+
 
 aedes.on('clientError', function (client, err) {
   // console.log('Un error en el cliente', client.id, err.message, err.stack)
@@ -82,7 +84,7 @@ aedes.on('publish', function (packet, client) {
 function streamSensorRead(mensaje) {
   // pre-condicion: La coleccion y documento deben estar previamente creados en firestore
   // console.log(`Lectura del sensor ${mensaje["sensor"]}: ${mensaje["value"].toString()}`);
-  console.log(`Message MQTT ${JSON.stringify(mensaje)}`);
+  console.log(`Message-MQTT:  ${JSON.stringify(mensaje)}`);
   switch (mensaje["sensor"]) {
     case "PIR":
       Notification.actualizarFirestore({coleccion:"lecturasSensor",documento:"pir"}, mensaje); //aqui debo pasarle como parametro la colecion, y obviamente el documento a actualizar      
