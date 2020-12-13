@@ -77,7 +77,9 @@ function sendMessage(message) {
 }
 
 function leerTokenDevicefromFirestoreDB() {
-    return "eAt7XP3yRbaJGvdcuRr7Vw:APA91bE7g8qD2BRKOB7g9GgvOrhk0k6C4LOxOKQjsMrf9n6eUYr9dbMT_0WquEreBXXiDqM3u7U2N1UIhziuAy-nOXkuUzSDstCLl1SRuc0Z7ywgiki9GX2SB9U1S7WNhzARTVnM4rUP";
+    // return "eAt7XP3yRbaJGvdcuRr7Vw:APA91bE7g8qD2BRKOB7g9GgvOrhk0k6C4LOxOKQjsMrf9n6eUYr9dbMT_0WquEreBXXiDqM3u7U2N1UIhziuAy-nOXkuUzSDstCLl1SRuc0Z7ywgiki9GX2SB9U1S7WNhzARTVnM4rUP";
+    return "djmsomH2SVG4M1wzHimAb_:APA91bFs6jsO3-3W0KRTsL1z4fujyIWe76_69xcPzlqSYJ8LxZnkPGCGqbTXd1si1l248e_x07nztsHVAJsAWgUakxttRCaaGWhEGT0Gs8vGxM_uix5WWC-zoSZo2y_WUroWIRnqiYsB";
+    
 }
 
 function guardarAmenaza(amenaza) {
@@ -105,7 +107,7 @@ function actualizarFirestore(destino, mensaje) {
         })
         .catch(function () {
             // The document probably doesn't exist.
-            console.error("ActualizarFirestore: Error updating document: ", error);
+            // console.error("ActualizarFirestore: Error updating document: ", error);
         });
 
 }
