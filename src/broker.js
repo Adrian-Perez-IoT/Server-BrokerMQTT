@@ -7,7 +7,7 @@ const port = 1883
 
 
 server.listen(port, function () {
-  console.log('Servidor Backend escuchando en puerto: ', port);
+  console.log('\n Backend Server started and listening on port: ', port);
   // console.log(`Environment: ${process.env.NODE_ENV}`);
 })
 
@@ -41,8 +41,8 @@ aedes.on('publish', function (packet, client) {
           console.log('Amenaza indetificada: ', JSON.parse(packet.payload.toString()));
           let horario_exacto = obtenerHorario(mensajeMqtt["time"]); // añadir la obtencion de horario del servidor local o servidor cloud segun la variable Encironment
           let sensor_name = (mensajeMqtt["sensor"] == "PIR") ? "de movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "magnetico" : "de gas toxico";
-          let nombre_amenaza = (mensajeMqtt["sensor"] == "PIR") ? "movimientos en la Sala" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "la apertura del porton en el garage" : "gas toxico en la cocina";
-          mensajeMqtt["titulo"] = (mensajeMqtt["sensor"] == "PIR") ? "Alerta de Movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "Alerta Apertura del Porton" : "Peligro Monoxido de Carbono";
+          let nombre_amenaza = (mensajeMqtt["sensor"] == "PIR") ? "movimientos en la Sala" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "la apertura del portón en el garage" : "gas tóxico en la cocina";
+          mensajeMqtt["titulo"] = (mensajeMqtt["sensor"] == "PIR") ? "Alerta de movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "Apertura del Portón" : "Peligro: Monóxido de Carbono";
           // mensajeMqtt["mensaje"] = `El sensor ${sensor_name} detecto a las ${horario_exacto} una posible amenaza.`;
           mensajeMqtt["mensaje"] = `Se detecto a las ${horario_exacto} ${nombre_amenaza}.`;
           //Si paso 1 minutos desde la ultima notificacion, entonces notifico nuevamente. (para no saturar)        
@@ -74,7 +74,7 @@ aedes.on('publish', function (packet, client) {
         }
       }
       else {
-        console.log("ERROR Message: El DATO recibido no es JSON");
+        console.log("ERROR: El DATO recibido no esta en formato JSON");
       }
     }
   }
@@ -84,7 +84,7 @@ aedes.on('publish', function (packet, client) {
 function streamSensorRead(mensaje) {
   // pre-condicion: La coleccion y documento deben estar previamente creados en firestore
   // console.log(`Lectura del sensor ${mensaje["sensor"]}: ${mensaje["value"].toString()}`);
-  console.log(`Message-MQTT:  ${JSON.stringify(mensaje)}`);
+  console.log(`Message-MQTT received:  ${JSON.stringify(mensaje)}`);
   switch (mensaje["sensor"]) {
     case "PIR":
       Notification.actualizarFirestore({coleccion:"lecturasSensor",documento:"pir"}, mensaje); //aqui debo pasarle como parametro la colecion, y obviamente el documento a actualizar      
