@@ -38,11 +38,11 @@ aedes.on('publish', function (packet, client) {
         streamSensorRead(mensajeMqtt); // funcion para transmitir la ultima lectura de cada sensor
 
         if (mensajeMqtt["value"] == true) {
-          console.log('Amenaza indetificada: ', JSON.parse(packet.payload.toString()));
+          console.log('Amenaza identificada: ', JSON.parse(packet.payload.toString()));
           let horario_exacto = obtenerHorario(mensajeMqtt["time"]); // añadir la obtencion de horario del servidor local o servidor cloud segun la variable Encironment
           let sensor_name = (mensajeMqtt["sensor"] == "PIR") ? "de movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "magnetico" : "de gas toxico";
-          let nombre_amenaza = (mensajeMqtt["sensor"] == "PIR") ? "movimientos en la Sala" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "la apertura del portón en el garage" : "gas tóxico en la cocina";
-          mensajeMqtt["titulo"] = (mensajeMqtt["sensor"] == "PIR") ? "Alerta de movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "Apertura del Portón" : "Peligro: Monóxido de Carbono";
+          let nombre_amenaza = (mensajeMqtt["sensor"] == "PIR") ? "movimientos en la Sala" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "la apertura de la puerta principal" : "gas tóxico en la cocina";
+          mensajeMqtt["titulo"] = (mensajeMqtt["sensor"] == "PIR") ? "Alerta de movimiento" : (mensajeMqtt["sensor"] == "MAGNETIC") ? "Apertura de la Puerta" : "Peligro: Gas Tóxico";
           // mensajeMqtt["mensaje"] = `El sensor ${sensor_name} detecto a las ${horario_exacto} una posible amenaza.`;
           mensajeMqtt["mensaje"] = `Se detecto a las ${horario_exacto} ${nombre_amenaza}.`;
           //Si paso 1 minutos desde la ultima notificacion, entonces notifico nuevamente. (para no saturar)        
