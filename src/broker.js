@@ -5,13 +5,10 @@ const Notification = require("./notifications.js");
 
 const port = 1883
 
-
 server.listen(port, function () {
   console.log('\n Backend Server started and listening on port: ', port);
   // console.log(`Environment: ${process.env.NODE_ENV}`);
 })
-
-
 
 aedes.on('clientError', function (client, err) {
   // console.log('Un error en el cliente', client.id, err.message, err.stack)
